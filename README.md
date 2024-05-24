@@ -29,18 +29,18 @@ The PRP-Graph operates in two main stages: ranking graph construction and rankin
 
 ### Construction
 For ranking graph construction, document pairs are selectively compared according to Swiss-System to form a ranking graph with documents as vertices linked by bidirectional edges.
-Following is an example of run graph construction and get the re-ranking results of this stage:
+The following is an example of how to run graph construction with 20 comparison rounds and get the re-ranking results of this stage:
 ```
 CUDA_VISIBLE_DEVICES=0 python rankers/graph_construct.py \
     --dataset covid \
     --model google/flan-t5-large \
-    --round_num 40 
+    --round_num 20 
 
-result=./rerank_results/flan-t5-large/swiss/covid/standard/round40.swiss;
+result=./rerank_results/flan-t5-large/swiss/covid/standard/round20.swiss;
 python -m pyserini.eval.trec_eval -c -l 2 -m ndcg_cut.10 beir-v1.0.0-trec-covid-test ${result}
 
 Results:
-ndcg_cut_10             all     0.7701
+ndcg_cut_10             all     0.7624
 ```
 
 ### Aggregation
@@ -49,16 +49,26 @@ The following is an example of how to aggregate the ranking graph and obtain re-
 ```
 python rankers/graph_aggregate.py \
     --dataset covid \
-    --round 40 \
+    --round 20 \
     --model_name flan-t5-large
 
-result=./rerank_results/flan-t5-large/pagerank/covid/standard/round40.pagerank
+result=./rerank_results/flan-t5-large/pagerank/covid/standard/round20.pagerank
 python -m pyserini.eval.trec_eval -c -m ndcg_cut.10 beir-v1.0.0-trec-covid-test ${result}
 
 Results:
-ndcg_cut_10             all     0.7880
+ndcg_cut_10             all     0.7723
 ```
 
-## Interporation with BM25
+## Interpolate with BM25
+our approach, inherently semantic and generative, is best utilized in conjunction with a precision-oriented matching method like BM25.
+The following is an example of how to get the interpolated result of PRP-Graph and BM25:
+```
+prp_run=./rerank_results/flan-t5-large/pagerank/covid/standard/round20.pagerank
+save_file=./rerank_results/flan-t5-large/pagerank/covid/standard/round20.ensemble
+python interpolate.py --dataset covid --prp_file $prp_run --save_file $save_file
+
+Results:
+ndcg@10: 0.7808
+```
 
 ## Cite
