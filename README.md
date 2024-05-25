@@ -65,6 +65,7 @@ ndcg_cut_10             all     0.7723
 
 ## Interpolate with BM25
 Our approach, inherently semantic and generative, is best utilized in conjunction with a precision-oriented matching method like BM25. More settings can be found in `interpolation.sh`.
+
 The following is an example of how to get the interpolated result of PRP-Graph and BM25:
 ```
 prp_run=./rerank_results/flan-t5-large/pagerank/covid/standard/round20.pagerank
