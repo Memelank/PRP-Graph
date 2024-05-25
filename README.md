@@ -4,7 +4,7 @@ This repository contains the code and resources for our paper:
 
 > Jian Luo, Xuanang Chen, Ben He, Le Sun. PRP-Graph: Pairwise Ranking Prompting to LLMs with Graph Aggregation for Effective Text Re-ranking. ACL 2024.
 
-------figure 1
+![image](https://github.com/Memelank/PRP-Graph/blob/main/prp_graph.png)
 
 ## Installation
 We recommend you create a new conda environment `conda create -n prp_graph python=3.9`, 
@@ -25,9 +25,11 @@ cd retriever/
 python pyserini_retriever.py
 ```
 ## Ranking Graph Construction and Aggregation
-The PRP-Graph operates in two main stages: ranking graph construction and ranking graph aggregation. 
+The PRP-Graph operates in two main stages: ranking graph construction and ranking graph aggregation. The entire process is in `prp_graph.sh`.
 
 ### Construction
+![image](https://github.com/Memelank/PRP-Graph/blob/main/construction.png)
+
 For ranking graph construction, document pairs are selectively compared according to Swiss-System to form a ranking graph with documents as vertices linked by bidirectional edges.
 The following is an example of how to run graph construction with 20 comparison rounds and get the re-ranking results of this stage:
 ```
@@ -60,7 +62,7 @@ ndcg_cut_10             all     0.7723
 ```
 
 ## Interpolate with BM25
-our approach, inherently semantic and generative, is best utilized in conjunction with a precision-oriented matching method like BM25.
+Our approach, inherently semantic and generative, is best utilized in conjunction with a precision-oriented matching method like BM25. More settings can be found in `interpolation.sh`.
 The following is an example of how to get the interpolated result of PRP-Graph and BM25:
 ```
 prp_run=./rerank_results/flan-t5-large/pagerank/covid/standard/round20.pagerank
