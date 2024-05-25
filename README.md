@@ -48,6 +48,7 @@ ndcg_cut_10             all     0.7624
 
 ### Aggregation
 For ranking graph aggregation, the signals across the ranking graph constructed by the first stage are aggregated to produce a cohesive final document ranking that encapsulates the entire graph's sorting information.
+
 The following is an example of how to aggregate the ranking graph and obtain re-ranking results with PRP-Graph:
 ```
 python rankers/graph_aggregate.py \
