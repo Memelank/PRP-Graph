@@ -31,6 +31,7 @@ The PRP-Graph operates in two main stages: ranking graph construction and rankin
 ![image](https://github.com/Memelank/PRP-Graph/blob/main/construction.png)
 
 For ranking graph construction, document pairs are selectively compared according to Swiss-System to form a ranking graph with documents as vertices linked by bidirectional edges.
+
 The following is an example of how to run graph construction with 20 comparison rounds and get the re-ranking results of this stage:
 ```
 CUDA_VISIBLE_DEVICES=0 python rankers/graph_construct.py \
